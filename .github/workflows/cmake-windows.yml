@@ -13,7 +13,7 @@ permissions: read-all
 jobs:
   test_cmake-windows:
     name: MSVC C++-17
-    runs-on: windows-2022
+    runs-on: windows-2019
 
     steps:
     - uses: ilammy/msvc-dev-cmd@v1
