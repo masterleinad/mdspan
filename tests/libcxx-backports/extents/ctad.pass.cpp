@@ -29,7 +29,7 @@ struct NoDefaultCtorIndex {
 };
 
 template <class E, class Expected>
-constexpr void test(E e, Expected expected) {
+constexpr void test([[maybe_unused]] E e, [[maybe_unused]] Expected expected) {
   ASSERT_SAME_TYPE(E, Expected);
   assert(e == expected);
 }
