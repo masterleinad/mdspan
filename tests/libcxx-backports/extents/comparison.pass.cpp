@@ -25,7 +25,7 @@
 #include "../llvm_test_macros.h"
 
 template <class To, class From>
-constexpr void test_comparison(bool equal, To dest, From src) {
+constexpr void test_comparison([[maybe_unused]] bool equal, [[maybe_unused]] To dest, [[maybe_unused]] From src) {
   ASSERT_NOEXCEPT(dest == src);
   assert((dest == src) == equal);
   assert((dest != src) == !equal);

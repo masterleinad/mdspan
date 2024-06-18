@@ -37,7 +37,7 @@
 #include "../llvm_test_macros.h"
 
 template <class To, class From>
-constexpr void test_implicit_conversion(To dest, From src) {
+constexpr void test_implicit_conversion([[maybe_unused]] To dest, [[maybe_unused]] From src) {
   assert(dest == src);
 }
 

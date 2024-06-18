@@ -25,7 +25,7 @@
 // Furthermore, the indices/array/span can have integer types other than index_type
 
 template <class E, class AllExtents>
-constexpr void test_runtime_observers(E ext, AllExtents expected) {
+constexpr void test_runtime_observers([[maybe_unused]] E ext, [[maybe_unused]] AllExtents expected) {
   for (typename E::rank_type r = 0; r < ext.rank(); r++) {
     ASSERT_SAME_TYPE(decltype(ext.extent(0)), typename E::index_type);
     ASSERT_NOEXCEPT(ext.extent(0));
