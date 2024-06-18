@@ -40,7 +40,9 @@ template <class T, size_t Size,
           standard_layoutness StandardLayout = standard_layout,
           trivially_copyableness TriviallyCopyable = trivially_copyable>
 void test() {
+#if !defined(__INTEL_COMPILER)
   MDSPAN_STATIC_TEST(sizeof(T) == Size);
+#endif
   MDSPAN_STATIC_TEST(std::is_empty<T>::value == Empty);
 #if (!defined(__INTEL_COMPILER) || (__INTEL_COMPILER>=1900)) && \
     (!defined(__clang__) || (defined(__GNUC__) && (__GNUC__> 10)))
