@@ -42,6 +42,10 @@ jobs:
     name: ${{ matrix.compiler_driver }} C++${{ matrix.stdcxx }}
     steps:
 
+    - name: Install gtest
+      run: |
+        sudo apt-get update
+        sudo apt-get install libgtest-dev
     - name: Install icpc
       if: ${{ matrix.compiler_driver == 'icpc' }}
       run: |
@@ -51,7 +55,7 @@ jobs:
         rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
         echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
         sudo apt-get update
-        sudo apt-get install intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic
+        sudo apt-get install libgtest-dev intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic
         source /opt/intel/oneapi/setvars.sh
         which icpc
         printenv >> $GITHUB_ENV
@@ -83,7 +87,7 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{github.workspace}}/mdspan-build
-      run: CXX=${{ matrix.compiler_prefix}}/${{ matrix.compiler_driver }} cmake $GITHUB_WORKSPACE/mdspan-src -DMDSPAN_CXX_STANDARD=${{ matrix.stdcxx }} -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/mdspan-install -DMDSPAN_ENABLE_TESTS=ON -DMDSPAN_ENABLE_EXAMPLES=ON -DMDSPAN_ENABLE_BENCHMARKS=${{matrix.enable_benchmark}} -DMDSPAN_ENABLE_COMP_BENCH=ON -DCMAKE_CXX_FLAGS="-Werror -Wall -Wextra -Werror -pedantic ${{matrix.cxx_flags_extra}}"
+      run: CXX=${{ matrix.compiler_prefix}}/${{ matrix.compiler_driver }} cmake $GITHUB_WORKSPACE/mdspan-src -DMDSPAN_CXX_STANDARD=${{ matrix.stdcxx }} -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/mdspan-install -DMDSPAN_ENABLE_TESTS=ON -DMDSPAN_ENABLE_EXAMPLES=ON -DMDSPAN_ENABLE_BENCHMARKS=${{matrix.enable_benchmark}} -DMDSPAN_ENABLE_COMP_BENCH=ON -DCMAKE_CXX_FLAGS="-Werror -Wall -Wextra -Werror -pedantic ${{matrix.cxx_flags_extra}}" -DMDSPAN_USE_SYSTEM_GTEST=ON
 
     - name: Build
       shell: bash
