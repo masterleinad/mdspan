@@ -121,7 +121,7 @@ struct aligned_pointer {
 #  pragma warning disable 3186
 #endif
 
-  using type = ElementType* _MDSPAN_ALIGN_VALUE_ATTRIBUTE( byte_alignment );
+  using type = ElementType* _MDSPAN_ALIGN_VALUE_ATTRIBUTE( byte_alignment )
 
 #if defined(__ICC)
 #  pragma warning pop
