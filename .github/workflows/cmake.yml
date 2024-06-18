@@ -28,7 +28,7 @@ jobs:
           compiler_url: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/ebf5d9aa-17a7-46a4-b5df-ace004227c0e/l_dpcpp-cpp-compiler_p_2023.2.1.8_offline.sh
           cxx_flags_extra: "-DMDSPAN_USE_BRACKET_OPERATOR=0 -Wno-gnu-zero-variadic-macro-arguments -Wno-c++17-attribute-extensions"
         - compiler_driver: icpc
-          compiler_prefix: /opt/intel/oneapi/compiler/2021.5.0/linux/bin/intel64
+          compiler_prefix: /opt/intel/oneapi/compiler/2022.0.2/linux/bin/intel64
         - enable_benchmark: ON
         - stdcxx: 14
           enable_benchmark: OFF
@@ -51,7 +51,7 @@ jobs:
         rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
         echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
         sudo apt-get update
-        sudo apt-get install intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic-2021.5.0
+        sudo apt-get install intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic-2022.0.2
         source /opt/intel/oneapi/setvars.sh
         which icpc
         printenv >> $GITHUB_ENV
