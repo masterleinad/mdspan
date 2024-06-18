@@ -27,6 +27,8 @@ int test(int* data) {
       <%= " + sub#{n}_#{k}" %>()
   <% end %>
   ;
+  #else
+  (void) data;
   #endif
 }
 
