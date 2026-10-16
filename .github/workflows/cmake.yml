@@ -35,16 +35,16 @@ jobs:
           enable_benchmark: OFF
         - stdcxx: 23
           enable_benchmark: OFF
-        exclude:
-        - compiler_driver: g++-9
-          stdcxx: 23
-        - compiler_driver: g++-10
-          stdcxx: 23
         - compiler_driver: g++-16
           compiler_prefix: /usr/bin
           stdcxx: 26
           runs_on: ubuntu-26.04
           enable_benchmark: OFF
+        exclude:
+        - compiler_driver: g++-9
+          stdcxx: 23
+        - compiler_driver: g++-10
+          stdcxx: 23
 
     name: ${{ matrix.compiler_driver }} C++${{ matrix.stdcxx }}
     steps:
