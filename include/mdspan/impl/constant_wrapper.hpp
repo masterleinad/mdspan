@@ -56,7 +56,7 @@ template <auto Value>
 MDSPAN_INLINE_FUNCTION constexpr auto increment(
     [[maybe_unused]] constant_wrapper<Value> x) {
   using value_type = typename decltype(x)::value_type;
-  return cw<value_type(Value) + value_type(1)>;
+  return cw<Value + value_type(1)>;
 }
 
 // ============================================================
