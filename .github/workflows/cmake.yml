@@ -7,12 +7,13 @@ env:
 
 jobs:
   build-mdspan:
-    runs-on: ${{ matrix.runs_on }}
+    runs-on: 'ubunutu:22.04'
+    container:
+      image: ${{ matrix.compiler_driver == 'g++-16' && 'gcc:16.2.0' || 'ubuntu:22.04' }}
     strategy:
       fail-fast: false
       matrix:
         compiler_driver: [g++-9, g++-10, clang++, icpx]
-        runs_on: ['ubuntu-22.04']
         stdcxx: [14, 17, 20, 23]
         include:
         - compiler_driver: g++-9
@@ -38,7 +39,6 @@ jobs:
         - compiler_driver: g++-16
           compiler_prefix: /usr/bin
           stdcxx: 26
-          runs_on: ubuntu-26.04
           enable_benchmark: OFF
         exclude:
         - compiler_driver: g++-9
