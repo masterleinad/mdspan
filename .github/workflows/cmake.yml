@@ -7,11 +7,12 @@ env:
 
 jobs:
   build-mdspan:
-    runs-on: ${{ matrix.runs_on || 'ubuntu-22.04' }}
+    runs-on: ${{ matrix.runs_on }}
     strategy:
       fail-fast: false
       matrix:
         compiler_driver: [g++-9, g++-10, clang++, icpx]
+        runs_on: ['ubuntu-22.04']
         stdcxx: [14, 17, 20, 23]
         include:
         - compiler_driver: g++-9
