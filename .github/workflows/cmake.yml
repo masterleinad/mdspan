@@ -7,7 +7,7 @@ env:
 
 jobs:
   build-mdspan:
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.runs_on || 'ubuntu-22.04' }}
     strategy:
       fail-fast: false
       matrix:
@@ -39,6 +39,12 @@ jobs:
           stdcxx: 23
         - compiler_driver: g++-10
           stdcxx: 23
+        - compiler_driver: g++-16
+          compiler_prefix: /usr/bin
+          stdcxx: 26
+          runs_on: ubuntu-26.04
+          enable_benchmark: OFF
+
     name: ${{ matrix.compiler_driver }} C++${{ matrix.stdcxx }}
     steps:
 
