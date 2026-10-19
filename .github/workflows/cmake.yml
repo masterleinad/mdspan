@@ -7,7 +7,7 @@ env:
 
 jobs:
   build-mdspan:
-    runs-on: 'ubunutu:22.04'
+    runs-on: 'ubunutu:latest'
     container:
       image: ${{ matrix.compiler_driver == 'g++-16' && 'gcc:16.2.0' || 'ubuntu:22.04' }}
     strategy:
