@@ -60,17 +60,17 @@ jobs:
       if: ${{ matrix.compiler_driver == 'icpx' && steps.cache-icpx.outputs.cache-hit != 'true' }}
       run: |
         curl  --url ${{ matrix.compiler_url }} --output download.sh
-        sudo sh -x download.sh -s -a -s --action install --eula accept
+        sh -x download.sh -s -a -s --action install --eula accept
     - name: Install g++-9
       if: ${{ matrix.compiler_driver == 'g++-9' }}
-      run: sudo apt-get update && sudo apt-get install g++-9
+      run: apt-get update && apt-get install g++-9
     - name: Install g++-16
       if: ${{ matrix.compiler_driver == 'g++-16' }}
-      run: sudo apt-get update && sudo apt-get install g++-16
+      run: apt-get update && apt-get install g++-16
     - name: Install gtest manually
       run: |
-        sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp lib/*.a /usr/lib && sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
-        sudo apt install libbenchmark-dev
+        apt-get install libgtest-dev && cd /usr/src/gtest && cmake CMakeLists.txt && make && cp lib/*.a /usr/lib && ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
+        apt install libbenchmark-dev
 
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/mdspan-build
