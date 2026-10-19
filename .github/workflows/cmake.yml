@@ -94,8 +94,7 @@ jobs:
 
     - name: Build
       shell: bash
-      working-directory: ${{github.workspace}}/mdspan-build
-      run: make -j
+      run: cmake --build ${{github.workspace}}/mdspan-build --parallel
 
     - name: Test
       working-directory: ${{github.workspace}}/mdspan-build
