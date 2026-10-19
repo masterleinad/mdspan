@@ -20,10 +20,10 @@ jobs:
           compiler_path: /usr/bin/g++-9
           cxx_flags_extra: "-Wextra-semi"
         - compiler_driver: g++-10
-          compiler_path:  /usr/local/bin/g++
+          compiler_path:  g++
           cxx_flags_extra: "-Wextra-semi"
         - compiler_driver: clang++
-          compiler_path: /usr/local/bin/clang++
+          compiler_path: clang++
           cxx_flags_extra: "-stdlib=libc++ -Wextra-semi -Wno-c++17-attribute-extensions -Wno-gnu-zero-variadic-macro-arguments"
         - compiler_driver: icpx
           compiler_path: /opt/intel/oneapi/compiler/latest/linux/bin/icpx
