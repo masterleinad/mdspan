@@ -108,7 +108,7 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/mdspan-src
       run: |
-        cmake -S ./examples -B /tmp/build-mdspan-examples -Dmdspan_ROOT=${{github.workspace}}/mdspan-build
+        CXX=${{ matrix.compiler_prefix}}/${{ matrix.compiler_driver }} cmake -S ./examples -B /tmp/build-mdspan-examples -Dmdspan_ROOT=${{github.workspace}}/mdspan-build
         cmake --build /tmp/build-mdspan-examples
         rm -rf /tmp/build-mdspan-examples
 
@@ -116,6 +116,6 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/mdspan-src
       run: |
-        cmake -S ./examples -B /tmp/build-mdspan-examples -Dmdspan_ROOT=$GITHUB_WORKSPACE/mdspan-install
+        CXX=${{ matrix.compiler_prefix}}/${{ matrix.compiler_driver }} cmake -S ./examples -B /tmp/build-mdspan-examples -Dmdspan_ROOT=$GITHUB_WORKSPACE/mdspan-install
         cmake --build /tmp/build-mdspan-examples
         rm -rf /tmp/build-mdspan-examples
