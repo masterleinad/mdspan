@@ -49,7 +49,7 @@ jobs:
     steps:
 
     - name: Install common dependencies
-      run: apt-get update && apt-get install -y cmake curl
+      run: apt-get update && apt-get install -y cmake curl git
     - name: Cache icpx install
       if: ${{ matrix.compiler_driver == 'icpx' }}
       id: cache-icpx
