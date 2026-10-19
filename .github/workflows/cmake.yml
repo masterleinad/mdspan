@@ -63,14 +63,14 @@ jobs:
         sh -x download.sh -s -a -s --action install --eula accept
     - name: Install g++-9
       if: ${{ matrix.compiler_driver == 'g++-9' }}
-      run: apt-get update && apt-get install g++-9
+      run: apt-get update && apt-get install -y g++-9
     - name: Install g++-16
       if: ${{ matrix.compiler_driver == 'g++-16' }}
-      run: apt-get update && apt-get install g++-16
+      run: apt-get update && apt-get install -y g++-16
     - name: Install gtest manually
       run: |
-        apt-get install libgtest-dev && cd /usr/src/gtest && cmake CMakeLists.txt && make && cp lib/*.a /usr/lib && ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
-        apt install libbenchmark-dev
+        apt-get install -y libgtest-dev && cd /usr/src/gtest && cmake CMakeLists.txt && make && cp lib/*.a /usr/lib && ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
+        apt install -y libbenchmark-dev
 
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/mdspan-build
