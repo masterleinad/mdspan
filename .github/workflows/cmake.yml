@@ -37,7 +37,6 @@ jobs:
         - stdcxx: 23
           enable_benchmark: OFF
         - compiler_driver: g++-16
-          compiler_prefix: /usr/bin
           stdcxx: 26
           enable_benchmark: OFF
         exclude:
