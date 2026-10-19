@@ -17,16 +17,16 @@ jobs:
         stdcxx: [14, 17, 20, 23]
         include:
         - compiler_driver: g++-9
-          compiler_prefix: /usr/bin
+          compiler_path: /usr/bin/g++-9
           cxx_flags_extra: "-Wextra-semi"
         - compiler_driver: g++-10
-          compiler_prefix: /usr/bin
+          compiler_path: /usr/bin/g++
           cxx_flags_extra: "-Wextra-semi"
         - compiler_driver: clang++
-          compiler_prefix: /usr/bin
+          compiler_path: /usr/bin/clang++
           cxx_flags_extra: "-stdlib=libc++ -Wextra-semi -Wno-c++17-attribute-extensions -Wno-gnu-zero-variadic-macro-arguments"
         - compiler_driver: icpx
-          compiler_prefix: /opt/intel/oneapi/compiler/latest/linux/bin
+          compiler_path: /opt/intel/oneapi/compiler/latest/linux/bin/icpx
           # To get new URL, look here:
           # https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html#inpage-nav-6-undefined
           compiler_url: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/ebf5d9aa-17a7-46a4-b5df-ace004227c0e/l_dpcpp-cpp-compiler_p_2023.2.1.8_offline.sh
@@ -37,7 +37,7 @@ jobs:
         - stdcxx: 23
           enable_benchmark: OFF
         - compiler_driver: g++-16
-          compiler_prefix: /usr/bin
+          compiler_path: /usr/bin/g++
           stdcxx: 26
           enable_benchmark: OFF
         exclude:
@@ -70,11 +70,7 @@ jobs:
       if: ${{ matrix.compiler_driver == 'g++-16' }}
       run: | 
         apt-get update && apt-get install -y g++-16 cmake
-        g++ --version
-        which g++
         ln -s /usr/local/bin/g++ /usr/bin/g++-16
-        g++-16 --version
-        which g++-16
     - name: Install gtest manually
       run: |
         apt-get install -y libgtest-dev && cd /usr/src/gtest && cmake CMakeLists.txt && make && cp lib/*.a /usr/lib && ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
@@ -90,7 +86,7 @@ jobs:
 
     - name: Configure CMake
       shell: bash
-      run: CXX=${{ matrix.compiler_prefix}}/${{ matrix.compiler_driver }} cmake $GITHUB_WORKSPACE/mdspan-src -B ${{github.workspace}}/mdspan-build -DCMAKE_CXX_STANDARD=${{ matrix.stdcxx }} -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/mdspan-install -DMDSPAN_ENABLE_TESTS=ON -DMDSPAN_ENABLE_EXAMPLES=ON -DMDSPAN_ENABLE_BENCHMARKS=${{matrix.enable_benchmark}} -DMDSPAN_ENABLE_COMP_BENCH=ON -DCMAKE_CXX_FLAGS="-Werror -Wall -Wextra -pedantic ${{matrix.cxx_flags_extra}}"
+      run: CXX=${{ matrix.compiler_path}} cmake $GITHUB_WORKSPACE/mdspan-src -B ${{github.workspace}}/mdspan-build -DCMAKE_CXX_STANDARD=${{ matrix.stdcxx }} -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/mdspan-install -DMDSPAN_ENABLE_TESTS=ON -DMDSPAN_ENABLE_EXAMPLES=ON -DMDSPAN_ENABLE_BENCHMARKS=${{matrix.enable_benchmark}} -DMDSPAN_ENABLE_COMP_BENCH=ON -DCMAKE_CXX_FLAGS="-Werror -Wall -Wextra -pedantic ${{matrix.cxx_flags_extra}}"
 
     - name: Build
       shell: bash
@@ -108,7 +104,7 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/mdspan-src
       run: |
-        CXX=${{ matrix.compiler_prefix}}/${{ matrix.compiler_driver }} cmake -S ./examples -B /tmp/build-mdspan-examples -Dmdspan_ROOT=${{github.workspace}}/mdspan-build
+        CXX=${{ matrix.compiler_path}} cmake -S ./examples -B /tmp/build-mdspan-examples -Dmdspan_ROOT=${{github.workspace}}/mdspan-build
         cmake --build /tmp/build-mdspan-examples
         rm -rf /tmp/build-mdspan-examples
 
@@ -116,6 +112,6 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/mdspan-src
       run: |
-        CXX=${{ matrix.compiler_prefix}}/${{ matrix.compiler_driver }} cmake -S ./examples -B /tmp/build-mdspan-examples -Dmdspan_ROOT=$GITHUB_WORKSPACE/mdspan-install
+        CXX=${{ matrix.compiler_path}} cmake -S ./examples -B /tmp/build-mdspan-examples -Dmdspan_ROOT=$GITHUB_WORKSPACE/mdspan-install
         cmake --build /tmp/build-mdspan-examples
         rm -rf /tmp/build-mdspan-examples
