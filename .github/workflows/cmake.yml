@@ -116,6 +116,6 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/mdspan-src
       run: |
-        cmake -S ./examples -B /tmp/build-mdspan-examples -Dmdspan_DIR=${{github.workspace}}/mdspan-install/lib/cmake/mdspan
+        cmake -S ./examples -B /tmp/build-mdspan-examples -Dmdspan_ROOT=$GITHUB_WORKSPACE/mdspan-install
         cmake --build /tmp/build-mdspan-examples
         rm -rf /tmp/build-mdspan-examples
