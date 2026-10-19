@@ -97,14 +97,12 @@ jobs:
       run: cmake --build ${{github.workspace}}/mdspan-build --parallel
 
     - name: Test
-      working-directory: ${{github.workspace}}/mdspan-build
       shell: bash
-      run: ctest --output-on-failure
+      run: ctest --test-dir ${{github.workspace}}/mdspan-build --output-on-failure
 
     - name: Install
       shell: bash
-      working-directory: ${{github.workspace}}/mdspan-build
-      run: make install
+      run: cmake --install ${{github.workspace}}/mdspan-build
 
     - name: Test Target Export
       shell: bash
