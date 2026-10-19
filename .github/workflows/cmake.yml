@@ -37,6 +37,7 @@ jobs:
         - stdcxx: 23
           enable_benchmark: OFF
         - compiler_driver: g++-16
+          compiler_prefix: /usr/bin
           stdcxx: 26
           enable_benchmark: OFF
         exclude:
@@ -67,7 +68,12 @@ jobs:
       run: apt-get update && apt-get install -y g++-9
     - name: Install g++-16
       if: ${{ matrix.compiler_driver == 'g++-16' }}
-      run: apt-get update && apt-get install -y g++-16 cmake
+      run: | 
+        apt-get update && apt-get install -y g++-16 cmake
+        g++ --version
+        which g++
+        g++-16 --version
+        which g++-16
     - name: Install gtest manually
       run: |
         apt-get install -y libgtest-dev && cd /usr/src/gtest && cmake CMakeLists.txt && make && cp lib/*.a /usr/lib && ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
