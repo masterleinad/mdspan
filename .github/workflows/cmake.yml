@@ -20,10 +20,10 @@ jobs:
           compiler_path: /usr/bin/g++-9
           cxx_flags_extra: "-Wextra-semi"
         - compiler_driver: g++-10
-          compiler_path: /usr/bin/g++
+          compiler_path:  /usr/local/bin/g++
           cxx_flags_extra: "-Wextra-semi"
         - compiler_driver: clang++
-          compiler_path: /usr/bin/clang++
+          compiler_path: /usr/local/bin/clang++
           cxx_flags_extra: "-stdlib=libc++ -Wextra-semi -Wno-c++17-attribute-extensions -Wno-gnu-zero-variadic-macro-arguments"
         - compiler_driver: icpx
           compiler_path: /opt/intel/oneapi/compiler/latest/linux/bin/icpx
@@ -61,6 +61,7 @@ jobs:
     - name: Install icpx
       if: ${{ matrix.compiler_driver == 'icpx' && steps.cache-icpx.outputs.cache-hit != 'true' }}
       run: |
+        apt-get update && apt-get install -y build-essential gcc g++ libstdc++-dev
         curl  --url ${{ matrix.compiler_url }} --output download.sh
         sh -x download.sh -s -a -s --action install --eula accept
     - name: Install g++-9
